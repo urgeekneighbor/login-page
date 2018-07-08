@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <title>[<%= user.local.email %>]</title>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Alegreya+Sans:100|Amatic+SC:700"/>
+        <link rel="stylesheet" href="stylesheets/layout.css"/>
+        <link rel="stylesheet" href="stylesheets/panel.css"/>
+    </head>
+    <body>
+        <div class="center">
+            <div class="holder">
+                <div class="title">Account info</div>
+                <div class="info">ID: <%= user._id %></div>
+                <div class="info">Email: <%= user.local.email %></div>
+                <a href="/logout" class="btn" title="Logout">Logout</a>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,28 @@
+.title {
+    width: 100%;
+    text-align: center;
+    font-size: 2em;
+    font-family: 'Amatic SC', sans-serif;
+    font-weight: 100;
+    margin-bottom: 10%;
+}
+
+.info {
+    margin: 20px 0;
+}
+
+.btn {
+    text-decoration: none;
+    color: inherit;
+    margin-top: 20px;
+    border: 1px solid #F7F6F6;
+    padding: 10px;
+    font-size: .8em!important;
+    transition-duration: .4s;
+}
+
+.btn:hover {
+    background-color: #F7F6F6;
+    color: #173549;
+    transition-duration: .4s;
+}
