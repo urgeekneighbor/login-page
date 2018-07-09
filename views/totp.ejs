@@ -7,13 +7,14 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Alegreya+Sans:100|Amatic+SC:700"/>
         <link rel="stylesheet" href="stylesheets/layout.css"/>
         <link rel="stylesheet" href="stylesheets/login.css"/>
+        <link rel="stylesheet" href="stylesheets/totp.css"/>
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
     </head>
     <body>
         <div class="center">
             <div class="holder">
                     <form action="/totp-verify" method="post">
-                        <div class="form-group">
+                        <div class="form-group" style="margin-bottom: 8%!important;">
                             <img src=<%= qr_url %>>
                         </div>
                         
@@ -23,12 +24,22 @@
 
                         <div class="form-group">
                             <label>Code</label>
-                            <input type="number" class="form-control" name="code" required>
+                            <input type="number" class="form-control" name="code" placeholder="Enter 6 digits code"required>
                         </div>
                 
-                        <button type="submit" class="btn">Verify</button>
+                        <button type="submit" class="btn" style="margin-top: 6%!important;">Verify</button>
                     </form>
                     <hr>
+            </div>
+            <div class="alter">
+                    <section>
+                        <h1>What to do?</h1>
+                        <h3>[Step #1]: Download Google Authenticator<br><a title="Download Google Authenticator from Google Play" target="blank" href="https://is.gd/8HT5Vw">Android</a> & <a title="Download Google Authenticator from iTunes" href="https://is.gd/qNMgJa" target="blank">iOS</a></h3>
+                        <h3>[Step #2]: Open the app click on + on the bottom right choose "Scan a barcode"</h3>
+                        <h3>[Step #3]: Scan the QRcode show on the left you'll get a 6 digits Code</h3>
+                        <h3>[Step #4]: The Code on your phone is marked with the tag "Don (your Email)" in the input field</h3>
+                        <h3>[Step #5]: Hit "verify"</h3>
+                    </section>
             </div>
             <div class="to-home">
                <a title="Go home" href="/">☐</a>
