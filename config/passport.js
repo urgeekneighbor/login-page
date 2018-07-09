@@ -36,10 +36,17 @@ module.exports = (passport) => {
             if (!user)
                 return done(null, false, req.flash('loginMessage', 'No user found!'));
 
-            if (!user.validateCode(user.local.secret, code))
+            if (!user.validateCode(user.local.secret, code) && !user.validateBackup(code, user.local.backup_codes))
                 return done(null, false, req.flash('loginMessage', 'Oops! Wrong code!'));
 
-            return done(null, user);
+            user.local.backup_codes.one = user.generateBackup();
+            
+            user.save((err) => {
+                if(err)
+                    throw err;
+                    
+                return done(null, user);
+            });
         });
     }));
 
@@ -62,9 +69,9 @@ module.exports = (passport) => {
                 else {
                     let newbie = new User();
 
-                    newbie.local.email    = email;
-                    newbie.local.secret   = newbie.generateSecret();
-
+                    newbie.local.email            = email;
+                    newbie.local.secret           = newbie.generateSecret();
+                    newbie.local.backup_codes.one = newbie.generateBackup();
 
                     newbie.save((err) => {
                         if(err)

@@ -7,7 +7,10 @@ var speakeasy = require('speakeasy');
 var userSchema = mongoose.Schema({
     local            : {
         email        : String,
-        secret       : String
+        secret       : String,
+        backup_codes : {
+            one      : String
+        }
     }
 });
 
@@ -25,6 +28,22 @@ userSchema.methods.validateCode = function(secret, code) {
         encoding: 'base32',
         token: String(code)
     });
+};
+
+userSchema.methods.generateBackup = function() {
+    var buf = []
+    , chars = 'AlBCaDEFjmcbeinkGgHdoqfIJprhKLsMzNOxtPwyQRuSvTUVWXYZ0123456789@#?'
+    , charlen = chars.length;
+
+    for (var i = 0; i < 8; i++) {
+     buf.push(chars[Math.floor(Math.random() * (charlen - 2))]);
+    }
+
+    return buf.join('');
+};
+
+userSchema.methods.validateBackup = function(code, backup_code) {
+    return code == backup_code.one;
 };
 
 
