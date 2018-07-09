@@ -27,5 +27,6 @@ userSchema.methods.validateCode = function(secret, code) {
     });
 };
 
+
 // ** launch the rocket **
 module.exports = mongoose.model('User', userSchema);

@@ -35,7 +35,7 @@ module.exports = (app, passport) => {
     }));
 
     app.get('/totp-verify', (req, res) => {
-        let otpUrl = 'otpauth://totp/Don (' + req.user.local.email + ')?secret=' + req.user.local.secret;
+        let otpUrl  = 'otpauth://totp/Don (' + req.user.local.email + ')?secret=' + req.user.local.secret;
         let qrImage = 'https://chart.googleapis.com/chart?chs=166x166&chld=L|0&cht=qr&chl=' + encodeURIComponent(otpUrl);
         res.render('totp.ejs', { qr_url: qrImage, message: req.flash('totpLoginMessage') }); 
     });

@@ -8,19 +8,19 @@
         <link rel="stylesheet" href="stylesheets/layout.css"/>
         <link rel="stylesheet" href="stylesheets/login.css"/>
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
-        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
     </head>
     <body>
         <div class="center">
             <div class="holder">
-                    <% if (message.length > 0) { %>
-                        <div class="alert alert-danger" id="alertbox"><%= message %></div>
-                    <% } %>
                     <form action="/totp-verify" method="post">
                         <div class="form-group">
                             <img src=<%= qr_url %>>
                         </div>
                         
+                        <% if (message.length > 0) { %>
+                            <div class="alertbox" id="alertbox"><%= message %></div>
+                        <% } %>
+
                         <div class="form-group">
                             <label>Code</label>
                             <input type="number" class="form-control" name="code" required>
