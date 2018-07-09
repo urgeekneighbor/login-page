@@ -8,22 +8,21 @@
         <link rel="stylesheet" href="stylesheets/layout.css"/>
         <link rel="stylesheet" href="stylesheets/login.css"/>
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
-        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
     </head>
     <body>
         <div class="center">
             <div class="holder">
                     <% if (message.length > 0) { %>
-                        <div class="alert alert-danger" id="alertbox"><%= message %></div>
+                        <div class="alertbox" id="alertbox"><%= message %></div>
                     <% } %>
                     <form action="/login" method="post">
                         <div class="form-group">
                             <label>Email</label>
-                            <input type="text" class="form-control" name="email">
+                            <input type="text" class="form-control" name="email" placeholder="Enter your Email" required>
                         </div>
                         <div class="form-group">
-                            <label>Password</label>
-                            <input type="password" class="form-control" name="password">
+                            <label>Code</label>
+                            <input type="number" class="form-control" name="code" placeholder="Enter 6 digits code" required>
                         </div>
                 
                         <button type="submit" class="btn">Login</button>
@@ -32,6 +31,15 @@
                     <div class="back-main">
                         <p style="font-size: .8em">Need an account? <a href="/signup"> Signup</a></p>
                     </div>
+            </div>
+            <div class="alter">
+                    <section>
+                        <h1>What to do?</h1>
+                        <h3>[Step #1]: Enter your email in the Email field</h3>
+                        <h3>[Step #2]: Open the Google Authenticator app on your phone</h3>
+                        <h3>[Step #3]: Enter the 6 digits code from your phone marked with "Don (your Email)" in the Code field</h3>
+                        <h3>[Step #4]: Hit "Login"!</h3>
+                    </section>
             </div>
             <div class="to-home">
                <a title="Go home" href="/">☐</a>

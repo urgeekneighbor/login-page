@@ -29,8 +29,20 @@ module.exports = (app, passport) => {
 
     // ** process sign-up**
     app.post('/signup', passport.authenticate('local-signup', {
-        successRedirect : '/profile',
+        successRedirect : '/totp-verify',
         failureRedirect : '/signup',
+        failureFlash : true
+    }));
+
+    app.get('/totp-verify', (req, res) => {
+        let otpUrl  = 'otpauth://totp/Don (' + req.user.local.email + ')?secret=' + req.user.local.secret;
+        let qrImage = 'https://chart.googleapis.com/chart?chs=166x166&chld=L|0&cht=qr&chl=' + encodeURIComponent(otpUrl);
+        res.render('totp.ejs', { qr_url: qrImage, message: req.flash('totpLoginMessage') }); 
+    });
+
+    app.post('/totp-verify', passport.authenticate('totp-login', {
+        successRedirect : '/profile',
+        failureRedirect : '/totp-verify',
         failureFlash : true
     }));
 

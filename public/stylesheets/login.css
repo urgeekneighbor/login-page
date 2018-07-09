@@ -62,5 +62,65 @@ button:hover {
 }
 
 #alertbox {
-    font-size: .8em!important;
+    opacity: .8;
+    font-family: 'Amatic SC', sans-serif!important;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 1em!important;
+    background-color: #F7F6F6!important;
+    color: rgb(209, 37, 37)!important;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
+}
+
+.alter {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    height: 60%;
+    width: 25%;
+    border: 1px solid #F7F6F6;
+    font-size: 3em;
+    color: #F7F6F6;
+}
+
+.alter section {
+    max-width: 90%;
+}
+
+.alter h1 {
+    font-weight: 800!important;
+    font-size: 1.2em;
+    background-color: #F7F6F6!important;
+    border-radius: 10px;
+    color: #173549!important;
+    padding: 10px;
+}
+
+.alter h3 {
+    font-weight: 700!important;
+    margin: 10% 0;
+    font-size: .6em;
+}
+
+a {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.holder {
+    margin-right: 4%!important;
+}
+
+.center {
+    flex-direction: row!important;
 }

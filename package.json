@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "main": "server.js",
   "dependencies": {
-    "bcrypt-nodejs": "latest",
     "body-parser": "^1.18.3",
     "cli-color": "^1.2.0",
-    "connect-flash": "~0.1.1",
+    "connect-ensure-login": "^0.1.1",
+    "connect-flash": "^0.1.1",
     "cookie-parser": "~1.4.3",
     "ejs": "~2.5.2",
     "express": "^4.16.3",
@@ -17,6 +17,8 @@
     "nodemon": "^1.17.5",
     "passport": "^0.4.0",
     "passport-local": "~1.0.0",
-    "speakeasy": "^2.0.0"
+    "qrcode": "^1.2.0",
+    "speakeasy": "^2.0.0",
+    "thirty-two": "^1.0.2"
   }
 }

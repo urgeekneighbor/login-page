@@ -1,19 +1,19 @@
 // ## requires, basic setups and stuff ##
-var express = require("express");
-var app = express();
-var port = process.env.PORT || 1301;
+var express      = require("express");
+var app          = express();
+var port         = process.env.PORT || 1301;
 
-var mongoose = require("mongoose");
-var passport = require("passport");
-var flash = require("connect-flash");
+var mongoose     = require("mongoose");
+var passport     = require("passport");
+var flash        = require("connect-flash");
 
-var morgan = require("morgan");
-var path = require('path');
+var morgan       = require("morgan");
+var path         = require('path');
 var cookieParser = require("cookie-parser");
-var bodyParser = require("body-parser");
-var session = require("express-session");
+var bodyParser   = require("body-parser");
+var session      = require("express-session");
 
-var color = require('cli-color');
+var color        = require('cli-color');
 
 // ## config and advanced setup crap going on ##
 mongoose.connect("mongodb://127.0.0.1:27017/test", { useMongoClient: true });
