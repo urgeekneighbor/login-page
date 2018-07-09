@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <title>DON - Login</title>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Alegreya+Sans:100|Amatic+SC:700"/>
+        <link rel="stylesheet" href="stylesheets/layout.css"/>
+        <link rel="stylesheet" href="stylesheets/login.css"/>
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    </head>
+    <body>
+        <div class="center">
+            <div class="holder">
+                    <% if (message.length > 0) { %>
+                        <div class="alert alert-danger" id="alertbox"><%= message %></div>
+                    <% } %>
+                    <form action="/totp-verify" method="post">
+                        <div class="form-group">
+                            <img src=<%= qr_url %>>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Code</label>
+                            <input type="number" class="form-control" name="code" required>
+                        </div>
+                
+                        <button type="submit" class="btn">Verify</button>
+                    </form>
+                    <hr>
+            </div>
+            <div class="to-home">
+               <a title="Go home" href="/">☐</a>
+            </div>
+        </div>
+    </body>
+</html>

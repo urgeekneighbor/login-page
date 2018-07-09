@@ -25,10 +25,10 @@ module.exports = (passport) => {
     // ## local login ##
     passport.use('local-login', new localStrategy({
         usernameField : 'email',
-        passwordField : 'password',
+        passwordField : 'code',
         passReqToCallback : true
         
-    }, (req, email, password, done) => {
+    }, (req, email, code, done) => {
         User.findOne({ 'local.email' :  email }, (err, user) => {
             if (err)
                 return done(err);
@@ -36,8 +36,8 @@ module.exports = (passport) => {
             if (!user)
                 return done(null, false, req.flash('loginMessage', 'No user found.'));
 
-            if (!user.validPassword(password))
-                return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.'));
+            if (!user.validateCode(user.local.secret, code))
+                return done(null, false, req.flash('loginMessage', 'Oops! Wrong code.'));
 
             return done(null, user);
         });
@@ -47,7 +47,7 @@ module.exports = (passport) => {
     // ## local signup ##
     passport.use('local-signup', new localStrategy({
         usernameField: 'email',
-        passwordField: 'password',
+        passwordField: 'email',
         passReqToCallback: true
 
     }, (req, email, password, done) => {
@@ -62,8 +62,8 @@ module.exports = (passport) => {
                 else {
                     let newbie = new User();
 
-                    newbie.local.email = email;
-                    newbie.local.password = newbie.generateHash(password);
+                    newbie.local.email    = email;
+                    newbie.local.secret   = newbie.generateSecret();
 
                     newbie.save((err) => {
                         if(err)
@@ -73,6 +73,23 @@ module.exports = (passport) => {
                     });
                 }
             });
+        });
+    }));
+
+    passport.use('totp-login', new localStrategy({
+        usernameField : 'code',
+        passwordField : 'code',
+        passReqToCallback : true
+        
+    }, (req, email, code, done) => {
+        User.findOne({ 'local.email' :  req.user.local.email }, (err, user) => {
+            if (err)
+                return done(err);
+
+            if (!user.validateCode(user.local.secret, code))
+                return done(null, false, req.flash('totpLoginMessage', 'Oops! Wrong code.'));
+
+            return done(null, user);
         });
     }));
 };
