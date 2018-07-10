@@ -10,7 +10,8 @@ var userSchema = mongoose.Schema({
         secret       : String,
         backup_codes : {
             one      : String
-        }
+        },
+        isVerified   : Boolean
     }
 });
 
@@ -29,6 +30,10 @@ userSchema.methods.validateCode = function(secret, code) {
         token: String(code)
     });
 };
+
+userSchema.methods.isVerified = function() {
+    return this.local.isVerified;
+}
 
 userSchema.methods.generateBackup = function() {
     var buf = []

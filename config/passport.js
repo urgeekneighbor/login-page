@@ -63,8 +63,22 @@ module.exports = (passport) => {
                 if(err) 
                     return done(err);
 
-                if(user)
-                    return done(null, false, req.flash('signupMessage', 'That email is already taken!'));
+                if(user) {
+                    if(user.local.isVerified == false) {
+                        User.deleteOne({"_id": user._id}, function(err){
+                            if(err) throw err;
+                            return done(null, false, req.flash('signupMessage', 'Non verified Email removed try again!'));
+                        });
+                    }
+                    else 
+                        return done(null, false, req.flash('signupMessage', 'That email is already taken!'));
+                }
+
+                /* if(!user.isVerified()) {
+                    User.deleteOne({"_id": user._id}, function(err){
+                        if(err) throw err;
+                    });
+                } */
 
                 else {
                     let newbie = new User();
@@ -72,6 +86,7 @@ module.exports = (passport) => {
                     newbie.local.email            = email;
                     newbie.local.secret           = newbie.generateSecret();
                     newbie.local.backup_codes.one = newbie.generateBackup();
+                    newbie.local.isVerified       = false;
 
                     newbie.save((err) => {
                         if(err)
@@ -97,7 +112,14 @@ module.exports = (passport) => {
             if (!user.validateCode(user.local.secret, code))
                 return done(null, false, req.flash('totpLoginMessage', 'Oops! Wrong code!'));
 
-            return done(null, user);
+            user.local.isVerified = true;
+
+            user.save((err) => {
+                if(err)
+                    throw err;
+                    
+                return done(null, user);
+            });
         });
     }));
 };
