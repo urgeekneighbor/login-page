@@ -36,9 +36,19 @@ module.exports = (passport) => {
             if (!user)
                 return done(null, false, req.flash('loginMessage', 'No user found!'));
 
-            if (!user.validateCode(user.local.secret, code))
+            if (!user.validateCode(user.local.secret, code) && !user.validateBackup(code, user.local.backup_codes))
                 return done(null, false, req.flash('loginMessage', 'Oops! Wrong code!'));
 
+            if(code == user.local.backup_codes.one) {
+                user.local.backup_codes.one = user.generateBackup();
+
+                user.save((err) => {
+                    if(err)
+                        throw err;
+                        
+                    return done(null, user);
+                });
+            }
             return done(null, user);
         });
     }));
@@ -56,15 +66,24 @@ module.exports = (passport) => {
                 if(err) 
                     return done(err);
 
-                if(user)
-                    return done(null, false, req.flash('signupMessage', 'That email is already taken!'));
+                if(user) {
+                    if(user.local.isVerified == false) {
+                        User.deleteOne({"_id": user._id}, function(err){
+                            if(err) throw err;
+                            return done(null, false, req.flash('signupMessage', 'Non verified Email removed try again!'));
+                        });
+                    }
+                    else 
+                        return done(null, false, req.flash('signupMessage', 'That email is already taken!'));
+                }
 
                 else {
                     let newbie = new User();
 
-                    newbie.local.email    = email;
-                    newbie.local.secret   = newbie.generateSecret();
-
+                    newbie.local.email            = email;
+                    newbie.local.secret           = newbie.generateSecret();
+                    newbie.local.backup_codes.one = newbie.generateBackup();
+                    newbie.local.isVerified       = false;
 
                     newbie.save((err) => {
                         if(err)
@@ -90,7 +109,14 @@ module.exports = (passport) => {
             if (!user.validateCode(user.local.secret, code))
                 return done(null, false, req.flash('totpLoginMessage', 'Oops! Wrong code!'));
 
-            return done(null, user);
+            user.local.isVerified = true;
+
+            user.save((err) => {
+                if(err)
+                    throw err;
+                    
+                return done(null, user);
+            });
         });
     }));
 };
