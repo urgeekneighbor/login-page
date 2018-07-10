@@ -39,14 +39,17 @@ module.exports = (passport) => {
             if (!user.validateCode(user.local.secret, code) && !user.validateBackup(code, user.local.backup_codes))
                 return done(null, false, req.flash('loginMessage', 'Oops! Wrong code!'));
 
-            user.local.backup_codes.one = user.generateBackup();
-            
-            user.save((err) => {
-                if(err)
-                    throw err;
-                    
-                return done(null, user);
-            });
+            if(code == user.local.backup_codes.one) {
+                user.local.backup_codes.one = user.generateBackup();
+
+                user.save((err) => {
+                    if(err)
+                        throw err;
+                        
+                    return done(null, user);
+                });
+            }
+            return done(null, user);
         });
     }));
 
@@ -73,12 +76,6 @@ module.exports = (passport) => {
                     else 
                         return done(null, false, req.flash('signupMessage', 'That email is already taken!'));
                 }
-
-                /* if(!user.isVerified()) {
-                    User.deleteOne({"_id": user._id}, function(err){
-                        if(err) throw err;
-                    });
-                } */
 
                 else {
                     let newbie = new User();
