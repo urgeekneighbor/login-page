@@ -34,7 +34,7 @@ module.exports = (app, passport) => {
         failureFlash : true
     }));
 
-    app.get('/totp-verify', (req, res) => {
+    app.get('/totp-verify', isSignedUp, (req, res) => {
         let otpUrl  = 'otpauth://totp/Don (' + req.user.local.email + ')?secret=' + req.user.local.secret;
         let qrImage = 'https://chart.googleapis.com/chart?chs=166x166&chld=L|0&cht=qr&chl=' + encodeURIComponent(otpUrl);
         res.render('totp.ejs', { qr_url: qrImage, message: req.flash('totpLoginMessage') }); 
@@ -43,6 +43,18 @@ module.exports = (app, passport) => {
     app.post('/totp-verify', passport.authenticate('totp-login', {
         successRedirect : '/profile',
         failureRedirect : '/totp-verify',
+        failureFlash : true
+    }));
+
+    app.get('/totp-recover',isLoggedIn, (req, res) => {
+        let otpUrl  = 'otpauth://totp/Don (' + req.user.local.email + ')?secret=' + req.user.local.secret;
+        let qrImage = 'https://chart.googleapis.com/chart?chs=166x166&chld=L|0&cht=qr&chl=' + encodeURIComponent(otpUrl);
+        res.render('totp.ejs', { qr_url: qrImage, message: req.flash('totpLoginMessage') }); 
+    });
+
+    app.post('/totp-recover',isLoggedIn, passport.authenticate('totp-login', {
+        successRedirect : '/profile',
+        failureRedirect : '/totp-recover',
         failureFlash : true
     }));
 
@@ -64,5 +76,10 @@ module.exports = (app, passport) => {
 
 const isLoggedIn = (req, res, next) => {
     if(req.isAuthenticated()) return next();
-    res.redirect('/');
-}
+    res.redirect('/login');
+};
+
+const isSignedUp = (req, res, next) => {
+    if(req.user) return next();
+    res.redirect('/signup');
+};

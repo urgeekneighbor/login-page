@@ -36,6 +36,9 @@ module.exports = (passport) => {
             if (!user)
                 return done(null, false, req.flash('loginMessage', 'No user found!'));
 
+            if (!user.local.isVerified)
+                return done(null, false, req.flash('loginMessage', 'Please verify your code at /signup to complete registration!'));
+            
             if (!user.validateCode(user.local.secret, code) && !user.validateBackup(code, user.local.backup_codes))
                 return done(null, false, req.flash('loginMessage', 'Oops! Wrong code!'));
 
@@ -109,14 +112,18 @@ module.exports = (passport) => {
             if (!user.validateCode(user.local.secret, code))
                 return done(null, false, req.flash('totpLoginMessage', 'Oops! Wrong code!'));
 
-            user.local.isVerified = true;
+            if(user.local.isVerified == false) {
+                user.local.isVerified = true;
 
-            user.save((err) => {
-                if(err)
-                    throw err;
-                    
-                return done(null, user);
-            });
+                user.save((err) => {
+                    if(err)
+                        throw err;
+                        
+                    return done(null, user);
+                });
+            }
+
+            return done(null, user);
         });
     }));
 };

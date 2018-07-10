@@ -18,10 +18,13 @@
             </div>
             <div class="alter">
                     <section>
-                        <h1>Backup Codes</h1>
-                        <h3>Keep the code generate below somewhere safe</h3>
-                        <h3>In case of Google Authenticator app access lose use it to login!</h3>
-                        <h3>[BC #1]: <span style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"><%= user.local.backup_codes.one %></span></h3>
+                        <h1>Backup Options</h1>
+                        <hr>
+                        <h3>Your Backup code is</h3>
+                        <h3 style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">> <%= user.local.backup_codes.one %> <</h3>
+                        <hr>
+                        <h3>Recover Google Auth app access</h3>
+                        <a href="/totp-recover" class="btn" title="Recover Google Auth Access">Recover TOTP Access</a>
                     </section>
             </div>
         </div>
