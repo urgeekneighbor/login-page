@@ -32,11 +32,11 @@ userSchema.methods.validateCode = function(secret, code) {
 
 userSchema.methods.generateBackup = function() {
     var buf = []
-    , chars = 'AlBCaDEFjmcbeinkGgHdoqfIJprhKLsMzNOxtPwyQRuSvTUVWXYZ0123456789@#?'
+    , chars = 'AlBCaDEFjmcbeinkGgHdoqfIJprhKLsMzNOxtPwyQRuSvTUVWXYZ0123456789'
     , charlen = chars.length;
 
     for (var i = 0; i < 8; i++) {
-     buf.push(chars[Math.floor(Math.random() * (charlen - 2))]);
+     buf.push(chars[Math.floor(Math.random() * charlen)]);
     }
 
     return buf.join('');

@@ -22,7 +22,7 @@
                         </div>
                         <div class="form-group">
                             <label>Code</label>
-                            <input type="text" class="form-control" name="code" placeholder="Enter 6 digits code" required>
+                            <input type="password" size="8" minlength="6" maxlength="8" class="form-control" name="code" pattern="[0-9A-Za-z]{6,8}" placeholder="Enter 6 digits code" autocomplete="off" required>
                         </div>
                 
                         <button type="submit" class="btn">Login</button>
@@ -37,7 +37,7 @@
                         <h1>What to do?</h1>
                         <h3>[Step #1]: Enter your email in the Email field</h3>
                         <h3>[Step #2]: Open the Google Authenticator app on your phone</h3>
-                        <h3>[Step #3]: Enter the 6 digits code from your phone marked with "Don (your Email)" in the Code field</h3>
+                        <h3>[Step #3]: Enter the 6 digits code from your phone marked with "Don (your Email)" in the Code field or your Backup code</h3>
                         <h3>[Step #4]: Hit "Login"!</h3>
                     </section>
             </div>
